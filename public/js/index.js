@@ -1,3 +1,6 @@
+// 각 원소들에 대해 누른시간을 측정해 결과에서 리스트로 알려주기
+
+// 주기율표 원소 정보
 const elements = [
     {element: 'H', number: 1, period: 1, group: 1},
     {element: 'He', number: 2, period: 1, group: 18},
@@ -121,6 +124,7 @@ const elements = [
 
 let choice_element = 20;
 
+// 주기율표 그리기
 window.onload = function() {
     const periodicTable = document.getElementById('periodic-table');
 
@@ -151,6 +155,7 @@ window.onload = function() {
     trElement.className = 'element-box choice';
 };
 
+// 주기율표에서 원소 선택
 function click_element(e) {
     divElement = document.getElementById(choice_element);
     trElement = divElement.closest('td');
@@ -161,5 +166,11 @@ function click_element(e) {
     trElement.className = 'element-box choice';
     document.getElementsByTagName('h1')[0].innerText = `H to ${elements[e-1].element}`;
     document.getElementsByTagName('title')[0].innerText = `H to ${elements[e-1].element}`;
+
     choice_element = e;
 };
+
+// 게임 시작버튼 클릭
+function start() {
+    location.href = `/game?choice=${choice_element}`;
+}
