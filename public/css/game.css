@@ -25,3 +25,23 @@ table {
 h1 {
     font-size: 50px;
 }
+
+tr {
+    display: table-row;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    text-align: center;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    user-select: none; /* 텍스트 선택 비활성화 */
+    -webkit-user-select: none; /* Safari 지원 */
+    -moz-user-select: none; /* Firefox 지원 */
+    -ms-user-select: none; /* Internet Explorer 지원 */
+    font-size: 30px;
+}

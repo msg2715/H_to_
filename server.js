@@ -28,7 +28,11 @@ app.get('/', async(req, res)=>{
 
 app.get('/game', async(req, res)=>{
     const choice_element = req.query.choice
-    res.render('game.ejs', { element: choice_element })
+    if (choice_element < 20) {
+        res.send('<script>alert("Ca부터 선택이 가능합니다."); location.href="/";</script>')
+    } else {
+        res.render('game.ejs', { element: choice_element })
+    }
 })
 
 app.get('/result', async(req, res)=>{
