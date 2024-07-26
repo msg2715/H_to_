@@ -17,6 +17,9 @@ let game_elements = [] // 게임시 사용하게될 원소들
 let grid_elements = [] // 격자판에 존재하는 원소들
 let random_elements = [] // 원소들을 랜덤으로 배치하기 위한 코드
 let choice_element = 0
+let clickTime = [] // 각 원소들별로 클릭하는데 걸리는 시간을 알려줌.
+let interval;
+let startTime;
 
 window.onload = function() {
     const choice = document.getElementById('choice');
@@ -82,7 +85,12 @@ function click_element(element, number) {
             const rd = Math.floor(Math.random() * grid_elements.length);
             const newElement = grid_elements[rd]
             if (game_elements[0] == 'H') {
-                // 타이머 시작 기능 만들기
+                startTime = Date.now()
+                console.log(startTime)
+                const timer = document.getElementsByClassName("timer")[0]
+                interval = setInterval(() => {
+                    timer.innerText = `${Math.floor((Date.now() - startTime) / 1000)}.${(Date.now() - startTime) % 1000}`;
+                }, 10);
             }
             game_elements.shift()
             e.innerText = newElement
@@ -93,12 +101,13 @@ function click_element(element, number) {
         }
     
         if (game_elements.length == 0) {
-            console.log('end')
-            //게임을 종료시키는 코드 작성
+            clearInterval(interval);
+            const runningTime = Date.now() - startTime
+            console.log(startTime, runningTime)
+            document.getElementsByClassName("timer")[0].innerText = `${Math.floor((runningTime / 1000))}.${runningTime % 1000}`;
         }
     }
 }
-
 
 function re() {
     location.href = `/game?choice=${choice_element}`;
