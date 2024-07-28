@@ -16,13 +16,15 @@ const elements = [
 let game_elements = [] // 게임시 사용하게될 원소들
 let grid_elements = [] // 격자판에 존재하는 원소들
 let random_elements = [] // 원소들을 랜덤으로 배치하기 위한 코드
-let choice_element = 0
+var choice_element = 0
 let clickTime = [] // 각 원소들별로 클릭하는데 걸리는 시간을 알려줌.
 let interval;
 let startTime;
+let delay;
+let choice;
 
 window.onload = function() {
-    const choice = document.getElementById('choice');
+    choice = document.getElementById('choice');
     choice_element = choice.innerText
     choice.remove()
     
@@ -69,11 +71,14 @@ function click_element(element, number) {
         if (grid_elements.length == 0) {
             grid_elements = game_elements.slice(number**2, number**2*2)
             if (grid_elements.length == 0) {
+                clickTime.push(Date.now() - delay)
+                delay = Date.now()
                 e.innerText = ''
                 game_elements.shift()
             } else {
                 const rd = Math.floor(Math.random() * grid_elements.length);
                 const newElement = grid_elements[rd]
+
                 game_elements.shift()
                 e.innerText = newElement
                 e.id = newElement
@@ -85,13 +90,15 @@ function click_element(element, number) {
             const rd = Math.floor(Math.random() * grid_elements.length);
             const newElement = grid_elements[rd]
             if (game_elements[0] == 'H') {
+                delay = Date.now()
                 startTime = Date.now()
-                console.log(startTime)
                 const timer = document.getElementsByClassName("timer")[0]
                 interval = setInterval(() => {
                     timer.innerText = `${Math.floor((Date.now() - startTime) / 1000)}.${(Date.now() - startTime) % 1000}`;
                 }, 10);
             }
+            clickTime.push(Date.now() - delay)
+            delay = Date.now()
             game_elements.shift()
             e.innerText = newElement
             e.id = newElement
@@ -103,8 +110,20 @@ function click_element(element, number) {
         if (game_elements.length == 0) {
             clearInterval(interval);
             const runningTime = Date.now() - startTime
-            console.log(startTime, runningTime)
             document.getElementsByClassName("timer")[0].innerText = `${Math.floor((runningTime / 1000))}.${runningTime % 1000}`;
+
+            fetch('/result', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ choice_element, runningTime, clickTime })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.body.innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
         }
     }
 }
