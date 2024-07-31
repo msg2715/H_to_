@@ -172,8 +172,9 @@ function click_element(e) {
 
 // 게임 시작버튼 클릭
 function start() {
+    const hint = document.getElementById('hint').checked
     if (choice_element >= 20) {
-        location.href = `/game?choice=${choice_element}`;
+        location.href = `/game?choice=${choice_element}&hint=${hint}`;
     } else {
         alert("Ca부터 선택이 가능합니다.")
     }

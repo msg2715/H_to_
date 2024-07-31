@@ -19,16 +19,25 @@ let random_elements = [] // 원소들을 랜덤으로 배치하기 위한 코드
 var choice_element = 0
 let clickTime = [] // 각 원소들별로 클릭하는데 걸리는 시간을 알려줌.
 let interval;
+let hintInterval;
 let startTime;
 let delay;
 let choice;
+let ishint;
+let ht;
 
 window.onload = function() {
     choice = document.getElementById('choice');
     choice_element = choice.innerText
     choice.remove()
+
+    document.getElementsByTagName('title')[0].innerText = `H to ${elements[choice_element-1]}`;
+
+    ishint = document.getElementById('hint')
+    ht = ishint.innerText
+    ishint.remove()
     
-    document.getElementsByTagName('h1')[0].innerText = `H to ${elements[choice_element-1]}`
+    document.getElementsByTagName('h1')[0].innerText = `H to ${elements[choice_element]}`
 
     game_elements = elements.slice(0, choice_element)
     random_elements = elements.slice(0, choice_element)
@@ -75,11 +84,13 @@ function click_element(element, number) {
                 delay = Date.now()
                 e.innerText = ''
                 game_elements.shift()
+                hint(game_elements[0])
             } else {
                 const rd = Math.floor(Math.random() * grid_elements.length);
                 const newElement = grid_elements[rd]
 
                 game_elements.shift()
+                hint(game_elements[0])
                 e.innerText = newElement
                 e.id = newElement
                 e.removeEventListener('click', () => click_element(element, number))
@@ -100,6 +111,7 @@ function click_element(element, number) {
             clickTime.push(Date.now() - delay)
             delay = Date.now()
             game_elements.shift()
+            hint(game_elements[0])
             e.innerText = newElement
             e.id = newElement
             e.removeEventListener('click', () => click_element(element, number))
@@ -122,6 +134,23 @@ function click_element(element, number) {
             .then(response => response.text())
             .then(data => {
                 document.body.innerHTML = data;
+                const oldStyles = document.querySelector('link[href="/css/game.css"]');
+                oldStyles.parentNode.removeChild(oldStyles);
+                const oldScript = document.querySelector('script[src="/js/game.js"]');
+                oldScript.parentNode.removeChild(oldScript);
+                
+                const newStyle = document.createElement('link');
+                newStyle.rel = 'stylesheet';
+                newStyle.href = '/css/result.css';
+                document.head.appendChild(newStyle);
+                
+                const newScript = document.createElement('script');
+                newScript.src = '/js/result.js';
+                document.head.appendChild(newScript)
+
+                const newScr = document.createElement('script');
+                newScr.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                document.head.appendChild(newScr)
             })
             .catch(error => console.error('Error:', error));
         }
@@ -130,4 +159,29 @@ function click_element(element, number) {
 
 function re() {
     location.href = `/game?choice=${choice_element}`;
+}
+
+function main() {
+    location.href = '/'
+}
+
+function hint(element) {
+    if (ht == "true") {
+        if (hintInterval) {
+            clearInterval(hintInterval);
+            document.getElementById("hint").innerText = ''
+        }
+
+        hintInterval = setInterval(() => {
+            if (Date.now() - delay >= 5000) {
+                if (game_elements.length > 0 && game_elements[0] == element) {
+                    document.getElementById("hint").innerText = `hint : ${game_elements[0]}`
+                } else {
+                    document.getElementById("hint").innerText = ''
+                    clearInterval(hintInterval);
+                    return;
+                }
+            }
+        }, 50);
+    }
 }

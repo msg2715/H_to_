@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" href="/img/icon.ico"/>
 </head>
 <body>
-    <p>your H to Ca result:</p>
-    <h1 id="time"></h1>
-    <div>
-        <h1>결과</h1>
-        <p>선택한 요소: <%= choice %></p>
-        <p>소요 시간: <%= runningTime %> 밀리초</p>
-        <p>클릭 시간: <%= clickTime.join(', ') %></p>
+    <div class="box">
+        <p id='result' style="margin-bottom: -30px;"></p>
+        <h1 id="time" style="font-size: 50px;"><%= Math.floor((runningTime / 1000)) %>.<%= runningTime % 1000 %>S</h1>
+        <canvas id="myLineChart" width="700" height="350"></canvas>
+        <button onclick="re()">reset</button>
+        <button onclick="main()">main</button>
     </div>
 </body>
 </html>

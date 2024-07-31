@@ -6,15 +6,20 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/game.css">
     <script src="/js/game.js"></script>
+    <link rel="icon" href="/img/icon.ico"/>
 </head>
 <body>
     <div>
         <h1>H to Ca</h1>
     </div>
     <div id="choice"><%= element %></div>
-    <table class="game"></table>
-    <div class="timer">0.000</div>
+    <div id="hint"><%= hint %></div>
+    <div>
+        <div class="timer">0.000</div>
+        <table class="game"></table>
+    </div>
+    <div id="hint" style="font-size: 20px; margin-bottom: 8px;"></div>
     <button onclick="re()">reset</button>
-    <button>main</button>
+    <button onclick="main()">main</button>
 </body>
 </html>
