@@ -1,3 +1,8 @@
+// npm install express
+// npm install -g nodemon
+// npm install ejs
+
+
 const express = require('express')
 const path = require('path');
 const app = express();
