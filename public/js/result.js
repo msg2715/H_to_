@@ -19,7 +19,7 @@ result = document.getElementById('result')
 result.innerText = `your H to ${elementss[choice_element-1]} result:`
 
 for (let i = 0; i<=clickTime.length-1; i++) {
-    clickTime[i] = Math.round(clickTime[i] / 1000 * 10) / 10
+    clickTime[i] = Math.round(clickTime[i] / 1000 * 100) / 100
 }
 
 elementss = elementss.slice(0, choice_element)
