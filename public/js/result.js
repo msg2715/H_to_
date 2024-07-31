@@ -13,7 +13,7 @@ let elementss = [
     "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
 ];
 
-document.getElementsByTagName('title')[0].innerText = `H to ${choice}`;
+document.getElementsByTagName('title')[0].innerText = `H to ${elementss[Number(choice.innerText)-1]}`;
 
 result = document.getElementById('result')
 result.innerText = `your H to ${elementss[choice_element-1]} result:`
@@ -22,7 +22,7 @@ for (let i = 0; i<=clickTime.length-1; i++) {
     clickTime[i] = Math.round(clickTime[i] / 1000 * 10) / 10
 }
 
-elementss = elementss.slice(0, choice_element-1)
+elementss = elementss.slice(0, choice_element)
 const ctx = document.getElementById('myLineChart').getContext('2d');
 const myLineChart = new Chart(ctx, {
     type: 'line',
@@ -48,7 +48,7 @@ const myLineChart = new Chart(ctx, {
                 beginAtZero: true,
                 title: {
                     display: true,
-                    text: 'clicktime(s)'
+                    text: 'ClickTime(s)'
                 }
             }
         },
