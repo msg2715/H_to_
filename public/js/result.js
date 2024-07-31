@@ -13,8 +13,8 @@ let elementss = [
     "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
 ];
 
-document.getElementsByTagName('title')[0].innerText = `H to ${elementss[Number(choice.innerText)-1]}`;
 
+document.getElementsByTagName('title')[0].innerText = `H to ${elementss[Number(choice.innerText)-1]}`;
 result = document.getElementById('result')
 result.innerText = `your H to ${elementss[choice_element-1]} result:`
 
@@ -52,7 +52,6 @@ const myLineChart = new Chart(ctx, {
                 }
             }
         },
-        
     }
 });
 
