@@ -37,7 +37,7 @@ window.onload = function() {
     ht = ishint.innerText
     ishint.remove()
     
-    document.getElementsByTagName('h1')[0].innerText = `H to ${elements[choice_element]}`
+    document.getElementsByTagName('h1')[0].innerText = `H to ${elements[choice_element-1]}`
 
     game_elements = elements.slice(0, choice_element)
     random_elements = elements.slice(0, choice_element)
